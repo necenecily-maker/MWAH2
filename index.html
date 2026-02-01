@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Be My Valentine 💕</title>
+<title>Be My Valentine 💖</title>
 
 <style>
   body {
     margin: 0;
     height: 100vh;
-    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    background: linear-gradient(135deg, #ffd6e8, #ffeef6);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,97 +16,140 @@
     overflow: hidden;
   }
 
+  /* Floating hearts */
+  .heart {
+    position: fixed;
+    bottom: -20px;
+    color: #ff6fa1;
+    font-size: 20px;
+    animation: floatUp 6s linear infinite;
+    opacity: 0.7;
+  }
+
+  @keyframes floatUp {
+    from { transform: translateY(0) scale(1); opacity: 1; }
+    to { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+  }
+
   .card {
     background: white;
-    padding: 25px;
-    border-radius: 22px;
-    width: 340px;
+    padding: 24px;
+    border-radius: 24px;
+    width: 330px;
     text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.25);
     position: relative;
+    z-index: 10;
   }
 
   h1 {
     margin: 10px 0;
-    font-size: 28px;
-    color: #ff4f81;
+    font-size: 26px;
+    color: #ff5c8a;
   }
 
   p {
+    font-size: 17px;
     color: #555;
-    font-size: 18px;
-    margin-bottom: 15px;
   }
 
-  img {
-    width: 170px;
-    margin-bottom: 10px;
-    user-select: none;
+  /* Cute anime cat (CSS art, no image) */
+  .cat {
+    font-size: 90px;
+    margin: 10px 0;
   }
 
   .buttons {
     margin-top: 20px;
     position: relative;
-    height: 70px;
+    height: 80px;
   }
 
   button {
-    padding: 12px 24px;
-    font-size: 18px;
+    padding: 12px 22px;
+    font-size: 17px;
     border-radius: 14px;
     border: none;
     cursor: pointer;
     position: absolute;
-    transition: transform 0.2s;
+    transition: all 0.3s ease;
   }
 
   .yes {
-    background: #ff4f81;
+    background: #ff5c8a;
     color: white;
-    left: 40px;
+    left: 35px;
+    bottom: 10px;
   }
 
   .no {
-    background: #ccc;
+    background: #ddd;
     color: #333;
-    left: 170px;
+    left: 180px;
+    bottom: 10px;
   }
 </style>
 </head>
 
 <body>
 
+<!-- Floating hearts -->
+<script>
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = "💗";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = 14 + Math.random() * 22 + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }, 300);
+</script>
+
+<!-- Soft background music -->
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/10/03/audio_6f3f43ff24.mp3" type="audio/mpeg">
+</audio>
+
 <div class="card">
   <h1>Be My Valentine 💘</h1>
 
-  <!-- Cute anime-style character -->
-  <img src="https://i.imgur.com/8Km9tLL.png" alt="cute anime bear">
+  <!-- Cute anime animal (emoji, not a real person) -->
+  <div class="cat">🐱💕</div>
 
   <p>Will you be my Valentine?</p>
 
   <div class="buttons">
     <button class="yes" onclick="yesClicked()">Yes 💖</button>
-    <button class="no" onclick="runAway()" ontouchstart="runAway()">No 😒</button>
+    <button class="no" onclick="runAway()" ontouchstart="runAway()">No 🙄</button>
   </div>
 </div>
 
 <script>
-let scale = 1;
+let tries = 0;
+const messages = [
+  "NOPE 😼",
+  "still no 😤",
+  "why are you like this 😭",
+  "okay fine 😳"
+];
 
 function runAway() {
-  const btn = document.querySelector(".no");
+  const noBtn = document.querySelector(".no");
+  const box = document.querySelector(".buttons");
 
-  // Make YES grow every time NO is clicked
-  const yesBtn = document.querySelector(".yes");
-  scale += 0.15;
-  yesBtn.style.transform = `scale(${scale})`;
+  if (tries < 2) {
+    const maxX = box.clientWidth - noBtn.offsetWidth;
+    const maxY = box.clientHeight - noBtn.offsetHeight;
 
-  // Move NO far away (even off-screen)
-  const x = Math.random() * (window.innerWidth + 400) - 200;
-  const y = Math.random() * (window.innerHeight + 400) - 200;
-
-  btn.style.left = x + "px";
-  btn.style.top = y + "px";
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
+    noBtn.textContent = messages[tries];
+    tries++;
+  } else {
+    noBtn.textContent = "I give up 😳";
+    noBtn.style.background = "#bbb";
+  }
 }
 
 function yesClicked() {
@@ -117,14 +160,14 @@ function yesClicked() {
       display:flex;
       justify-content:center;
       align-items:center;
-      font-family:'Comic Sans MS',cursive;
       text-align:center;
+      font-family:'Comic Sans MS',cursive;
       color:white;
-      font-size:32px;
+      font-size:30px;
       padding:20px;
     ">
-      💖 YAYYY!! 💖<br><br>
-      You just made my heart explode 🥰✨
+      🐱💖 YAYYYY!! 💖🐱<br><br>
+      You just made my heart melt 🥰
     </div>
   `;
 }
